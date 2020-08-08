@@ -3,33 +3,51 @@ import iconWhats from '../../assets/images/icons/whatsapp.svg'
 
 
 import './styles.css'
+import api from '../../services/api';
+
+export interface Teacher{
+    id: number,
+    avatar :string,
+    bio: string,
+    cost:number,
+    name:string,
+    subject: string,
+    whatsapp :string
+}
+
+interface TeacherItemProps{
+    teacher :Teacher;
+    
+}
+const TeacherItem :React.FC<TeacherItemProps> = ({teacher}) => {
+
+function createNewConnection(){
+    api.post('connections',{
+        user_id :teacher.id
+    })
+}
 
 
-function TeacherItem() {
     return (
         <article className="teacher-item">
             <header>
-                <img src="https://media-exp1.licdn.com/dms/image/C4D03AQHlxDjY_ZHWSQ/profile-displayphoto-shrink_200_200/0?e=1602115200&v=beta&t=v_-24XMHCdNoLJIpl8tQY097WwZ4X2sKcweYHFjpM2E" alt="Junior" />
+                <img src={teacher.avatar} alt={teacher.name} />
                 <div>
-                    <strong>Junior Carrer</strong>
-                    <span>Quimica</span>
+    <strong>{teacher.name}</strong>
+    <span>{teacher.subject}</span>
                 </div>
 
-                <p>
-                    desctergjgekljgwekljgw vksjdgmwelkfjgmwelksgj veslgkvmwesldgjvmwes
-                           <br />
-                           ewgnvkwesglewk kweslçbgkwe kvwlçskgwelçsk kvesdgkwewelg
-                       </p>
+    <p>{teacher.bio}</p>
 
                 <footer>
                     <p>
                         Preço/Hora
-                               <strong>R$60.00</strong>
+    <strong>R${teacher.cost}</strong>
                     </p>
-                    <button type="button">
+                    <a  target="_blank" onClick={createNewConnection} href={`https://wa.me/${teacher.whatsapp}`} type="button">
                         <img src={iconWhats} alt="whatsapp" />
                                Entrar em contato
-                           </button>
+                           </a>
                 </footer>
 
             </header>
